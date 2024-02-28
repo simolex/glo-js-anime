@@ -14,9 +14,9 @@ module.exports = (env) => {
         mode,
         context: path.resolve(__dirname, "src"),
         entry: {
-            index: path.resolve(__dirname, "src", "js", "index.js"),
-            login: path.resolve(__dirname, "src", "js", "login.js"),
-            style: path.resolve(__dirname, "src", "js", "style.js")
+            index: path.resolve(__dirname, "src", "pages", "index.js"),
+            login: path.resolve(__dirname, "src", "pages", "login.js"),
+            style: path.resolve(__dirname, "src", "pages", "style.js")
         },
         output: {
             filename: "js/[name].[contenthash:5].js",
@@ -59,14 +59,26 @@ module.exports = (env) => {
             new CopyPlugin({
                 patterns: [
                     { from: path.resolve(srcPath, "db", "db.json"), to: path.resolve(buildPath) },
-                    { from: path.resolve(srcPath, "img"), to: path.resolve(buildPath, "img") }
+                    { from: path.resolve(srcPath, "img"), to: path.resolve(buildPath, "img") },
+                    { from: path.resolve(srcPath, "css"), to: path.resolve(buildPath, "css") },
+                    { from: path.resolve(srcPath, "js"), to: path.resolve(buildPath, "js") },
+                    { from: path.resolve(srcPath, "fonts"), to: path.resolve(buildPath, "fonts") }
                 ]
             }),
             new MiniCssExtractPlugin({
                 filename: "css/[name].[contenthash:5].css",
                 chunkFilename: "css/[name].[contenthash:5].css"
             })
-        ]
+        ],
+        devtool: isDev ? "eval-cheap-module-source-map" : undefined,
+        devServer: isDev
+            ? {
+                  port: 3000,
+                  open: true,
+                  historyApiFallback: true,
+                  hot: true
+              }
+            : undefined
 
         // src: path.resolve(__dirname, "src")
     };
