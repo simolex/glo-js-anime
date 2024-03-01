@@ -32,7 +32,7 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.(s[ac]ss|css)$/i,
-                    exclude: [/node_modules/],
+                    // exclude: [/node_modules/],
                     use: [
                         isDev ? "style-loader" : MiniCssExtractPlugin.loader, // Creates `style` nodes from JS strings
                         {
